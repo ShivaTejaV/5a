@@ -117,7 +117,7 @@ app.put("/movies/:movieId/", async (request, response) => {
         WHERE
             movie_id=${id};
         `;
-    await db.run(editMovieDetailsQuery);
+    let ans = await db.run(editMovieDetailsQuery);
     response.send("Movie Details Updated");
   } catch (error) {
     console.log(error);
@@ -149,7 +149,7 @@ app.get("/directors/", async (request, response) => {
         FROM director;`;
   let dbResponse = await db.all(getDirectorsQuery);
   let ans = [];
-  console.log(dbResponse);
+  //console.log(dbResponse);
 
   for (let ele of dbResponse) {
     let temp = {
@@ -160,3 +160,24 @@ app.get("/directors/", async (request, response) => {
   }
   response.send(ans);
 });
+
+// API 7
+
+app.get("/directors/:directorId/movies", async (request, response) => {
+  const { directorId } = request.params;
+  console.log(directorId);
+  const id = parseInt(directorId);
+  const query = `
+    SELECT movie_name
+    FROM 
+        director LEFT JOIN movie ON director.director_id = movie.director_id
+    WHERE director.director_id = ${id};`;
+  let dbResponse = await db.all(query);
+  let ans = [];
+  for (let movie of dbResponse) {
+    ans.push({ movieName: movie.movie_name });
+  }
+  response.send(ans);
+});
+
+module.exports = app;
