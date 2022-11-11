@@ -26,16 +26,20 @@ Content-Type: application/json
 
 {
   "directorId": 24,
-  "movieName": "Thor",
-  "leadActor": "Christopher Hemsworth"
+  "movieName": "ABCD",
+  "leadActor": "ABCD"
 }
 ####
 
 //API 5
-DELETE http://localhost:3000/movies/46
+DELETE http://localhost:3000/movies/50
 
 ####
 
 //API 6
 GET  http://localhost:3000/directors/
 ####
+
+
+//API 7 
+GET http://localhost:3000/directors/10/movies
